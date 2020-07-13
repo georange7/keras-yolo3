@@ -1,6 +1,6 @@
 # Traffic Sign Detection
 
-###Preprocess
+### Preprocess
 Converted dataset to Yolo format. 
 
 #### Yolo format
@@ -17,6 +17,10 @@ German Traffic Sign Detection Benchmark. 600 images for training and 300 for val
 
 Trained model YOLOv3 on Google Colaboratory.
 
+
+# 
+
+# Original Project
 
 ## YOLO3 (Detection, Training, and Evaluation)
 
