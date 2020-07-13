@@ -12,8 +12,8 @@ And with labelImg, converted to pascal voc (txt->xml)
 
 ### Dataset and Model
 German Traffic Sign Detection Benchmark. 600 images for training and 300 for validation. 
-(43 classes training ~ mAP 0.38)
-(4 classes training ~ mAP 0.90)
+- (43 classes training ~ mAP 0.38)
+- (4 classes training ~ mAP 0.90)
 
 Trained model YOLOv3 on Google Colaboratory.
 
