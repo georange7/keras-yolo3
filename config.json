@@ -34,7 +34,7 @@
     "valid": {
         "valid_image_folder":   "/home/giwrgos/FullIJCNN2013/validate/",
         "valid_annot_folder":   "/home/giwrgos/FullIJCNN2013/validate/annots/",
-        "cache_name":           "",
+        "cache_name":           "validation.pkl",
 
         "valid_times":          1
     }
