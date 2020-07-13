@@ -1,6 +1,26 @@
-# YOLO3 (Detection, Training, and Evaluation)
+# Traffic Sign Detection
 
-## Dataset and Model
+###Preprocess
+Converted dataset to Yolo format. 
+
+#### Yolo format
+```python
+<classId> <center_x> <center_y> <width> <height>
+```
+And with labelImg, converted to pascal voc (txt->xml)
+
+
+### Dataset and Model
+German Traffic Sign Detection Benchmark. 600 images for training and 300 for validation. 
+(43 classes training ~ mAP 0.38)
+(4 classes training ~ mAP 0.90)
+
+Trained model YOLOv3 on Google Colaboratory.
+
+
+## YOLO3 (Detection, Training, and Evaluation)
+
+### Dataset and Model
 
 Dataset | mAP | Demo | Config | Model
 :---:|:---:|:---:|:---:|:---:
@@ -10,7 +30,7 @@ Raccoon Detection (1 class) (https://github.com/experiencor/raccoon_dataset) | 9
 Red Blood Cell Detection (3 classes) (https://github.com/experiencor/BCCD_Dataset) | 84% | https://imgur.com/a/uJl2lRI | check zoo | https://bit.ly/39rLNoE
 VOC (20 classes) (http://host.robots.ox.ac.uk/pascal/VOC/voc2012/) | 72% | https://youtu.be/0RmOI6hcfBI | check zoo | https://bit.ly/39rLNoE
 
-## Todo list:
+### Todo list:
 - [x] Yolo3 detection
 - [x] Yolo3 training (warmup and multi-scale)
 - [x] mAP Evaluation
@@ -19,7 +39,7 @@ VOC (20 classes) (http://host.robots.ox.ac.uk/pascal/VOC/voc2012/) | 72% | https
 - [ ] Evaluation on COCO
 - [ ] MobileNet, DenseNet, ResNet, and VGG backends
 
-## Installing
+### Installing
 
 To install the dependencies, run
 ```bash
@@ -62,7 +82,7 @@ Also, if you've got the dataset split into 2 folders such as one for images and 
 # 4th param - folder where validation images/annots end up (must have images/annots folders inside the given directory as the 4th param)
 ```
 
-### 2. Edit the configuration file
+#### 2. Edit the configuration file
 The configuration file is a json file, which looks like this:
 
 ```python
