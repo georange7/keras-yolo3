@@ -1,5 +1,3 @@
-#! /usr/bin/env python
-
 import argparse
 import os
 import numpy as np
@@ -43,7 +41,7 @@ def create_training_instances(
     else:
         print("valid_annot_folder not exists. Spliting the trainining set.")
 
-        train_valid_split = int(0.8*len(train_ints))
+        train_valid_split = int(0.9*len(train_ints))
         np.random.seed(0)
         np.random.shuffle(train_ints)
         np.random.seed()
@@ -77,7 +75,7 @@ def create_callbacks(saved_weights_name, tensorboard_logs, model_to_save):
     early_stop = EarlyStopping(
         monitor     = 'loss', 
         min_delta   = 0.01, 
-        patience    = 7, 
+        patience    = 15, 
         mode        = 'min', 
         verbose     = 1
     )
@@ -93,7 +91,7 @@ def create_callbacks(saved_weights_name, tensorboard_logs, model_to_save):
     reduce_on_plateau = ReduceLROnPlateau(
         monitor  = 'loss',
         factor   = 0.1,
-        patience = 2,
+        patience = 5,
         verbose  = 1,
         mode     = 'min',
         epsilon  = 0.01,
@@ -104,6 +102,7 @@ def create_callbacks(saved_weights_name, tensorboard_logs, model_to_save):
         log_dir                = tensorboard_logs,
         write_graph            = True,
         write_images           = True,
+        update_freq            = "epoch",
     )    
     return [early_stop, checkpoint, reduce_on_plateau, tensorboard]
 
@@ -168,7 +167,7 @@ def create_model(
         train_model = template_model      
 
     optimizer = Adam(lr=lr, clipnorm=0.001)
-    train_model.compile(loss=dummy_loss, optimizer=optimizer)             
+    train_model.compile(loss=dummy_loss, optimizer=optimizer, metrics=['accuracy'])             
 
     return train_model, infer_model
 
@@ -256,15 +255,24 @@ def _main_(args):
     ###############################
     callbacks = create_callbacks(config['train']['saved_weights_name'], config['train']['tensorboard_dir'], infer_model)
 
-    train_model.fit_generator(
+    train_model.summary()
+    History = train_model.fit_generator(
         generator        = train_generator, 
         steps_per_epoch  = len(train_generator) * config['train']['train_times'], 
         epochs           = config['train']['nb_epochs'] + config['train']['warmup_epochs'], 
-        verbose          = 2 if config['train']['debug'] else 1,
+        verbose          = 2,
         callbacks        = callbacks, 
-        workers          = 4,
-        max_queue_size   = 8
+        workers          = 2,
+        max_queue_size   = 10
     )
+    N = np.arange(0, 40)
+    plt.style.use("ggplot")
+    plt.figure(figsize = (8,8))
+    plt.plot(N, History.history["loss"], label="train_loss")
+    plt.title("Training Loss")
+    plt.xlabel("Epoch")
+    plt.ylabel("Loss")
+    plt.legend(loc="lower left")
 
     # make a GPU version of infer_model for evaluation
     if multi_gpu > 1:
@@ -279,7 +287,10 @@ def _main_(args):
     # print the score
     for label, average_precision in average_precisions.items():
         print(labels[label] + ': {:.4f}'.format(average_precision))
-    print('mAP: {:.4f}'.format(sum(average_precisions.values()) / len(average_precisions)))           
+    print('mAP: {:.4f}'.format(sum(average_precisions.values()) / len(average_precisions))) 
+
+    print('recall: {:.4f}'.format(sum(recall.values()) / len(recall)))
+          
 
 if __name__ == '__main__':
     argparser = argparse.ArgumentParser(description='train and evaluate YOLO_v3 model on any dataset')
