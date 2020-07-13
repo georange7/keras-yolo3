@@ -12,6 +12,7 @@ from callbacks import CustomModelCheckpoint, CustomTensorBoard
 from utils.multi_gpu_model import multi_gpu_model
 import tensorflow as tf
 import keras
+import matplotlib.pyplot as plt
 from keras.models import load_model
 
 
