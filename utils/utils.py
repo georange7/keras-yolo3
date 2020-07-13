@@ -123,8 +123,8 @@ def evaluate(model,
         recall    = true_positives / num_annotations
         precision = true_positives / np.maximum(true_positives + false_positives, np.finfo(np.float64).eps)
         
-        print("Recall {:.4f}",recall)
-        print("Precision  {:.4f}", precision)
+#         print("Recall :{:.4f}",recall)
+#         print("Precision  :{:.4f}", precision)
 
         # compute average precision
         average_precision  = compute_ap(recall, precision)  
