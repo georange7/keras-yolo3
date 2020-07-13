@@ -3,7 +3,7 @@
         "min_input_size":       288,
         "max_input_size":       800,
         "anchors":              [55,69, 75,234, 133,240, 136,129, 142,363, 203,290, 228,184, 285,359, 341,260],
-        "labels":               ["prohibitory", "mandatory", "danger", "other"]
+        "labels":               ["danger", "mandatory", "other", "prohibitory"]
         
         },
 
@@ -12,7 +12,7 @@
         "train_annot_folder":   "/home/giwrgos/FullIJCNN2013/train/annots/",
         "cache_name":           "ssign.pkl",
 
-        "train_times":          4,
+        "train_times":          12,
         "batch_size":           4,
         "learning_rate":        1e-4,
         "nb_epochs":            100,
