@@ -70,7 +70,7 @@ def create_training_instances(
 
     return train_ints, valid_ints, sorted(labels), max_box_per_image
 
-def create_callbacks(saved_weights_name, tensorboard_logs, model_to_save):
+def create_callbacks(saved_weights_name, tensorboard_logs, model_to_save, tensorboard_logs_val):
     makedirs(tensorboard_logs)
     
     early_stop = EarlyStopping(
