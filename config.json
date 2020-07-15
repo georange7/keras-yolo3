@@ -36,6 +36,8 @@
         "valid_annot_folder":   "/home/giwrgos/FullIJCNN2013/validate/annots/",
         "cache_name":           "validation.pkl",
 
-        "valid_times":          1
+        "valid_times":          1,
+        "tensorboard_dir":      "val_logs"
+        
     }
 }
