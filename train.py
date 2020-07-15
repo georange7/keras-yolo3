@@ -76,7 +76,7 @@ def create_callbacks(saved_weights_name, tensorboard_logs, model_to_save):
     early_stop = EarlyStopping(
         monitor     = 'loss', 
         min_delta   = 0.01, 
-        patience    = 15, 
+        patience    = 14, 
         mode        = 'min', 
         verbose     = 1
     )
@@ -168,7 +168,7 @@ def create_model(
         train_model = template_model      
 
     optimizer = Adam(lr=lr, clipnorm=0.001)
-    train_model.compile(loss=dummy_loss, optimizer=optimizer, metrics=['accuracy'])             
+    train_model.compile(loss=dummy_loss, optimizer=optimizer)             
 
     return train_model, infer_model
 
@@ -257,23 +257,17 @@ def _main_(args):
     callbacks = create_callbacks(config['train']['saved_weights_name'], config['train']['tensorboard_dir'], infer_model)
 
     train_model.summary()
-    History = train_model.fit_generator(
+    train_model.fit_generator(
         generator        = train_generator, 
         steps_per_epoch  = len(train_generator) * config['train']['train_times'], 
         epochs           = config['train']['nb_epochs'] + config['train']['warmup_epochs'], 
         verbose          = 2,
         callbacks        = callbacks, 
         workers          = 2,
-        max_queue_size   = 10
+        max_queue_size   = 10,
+        validation_data= valid_generator,
     )
-    N = np.arange(0, 40)
-    plt.style.use("ggplot")
-    plt.figure(figsize = (8,8))
-    plt.plot(N, History.history["loss"], label="train_loss")
-    plt.title("Training Loss")
-    plt.xlabel("Epoch")
-    plt.ylabel("Loss")
-    plt.legend(loc="lower left")
+
 
     # make a GPU version of infer_model for evaluation
     if multi_gpu > 1:
@@ -290,7 +284,7 @@ def _main_(args):
         print(labels[label] + ': {:.4f}'.format(average_precision))
     print('mAP: {:.4f}'.format(sum(average_precisions.values()) / len(average_precisions))) 
 
-    print('recall: {:.4f}'.format(sum(recall.values()) / len(recall)))
+#     print('recall: {:.4f}'.format(sum(recall.values()) / len(recall)))
           
 
 if __name__ == '__main__':
