@@ -267,7 +267,11 @@ def _main_(args):
         max_queue_size   = 10,
         validation_data= valid_generator,
     )
-
+    
+    
+    tf.keras.utils.plot_model(
+    train_model,
+    to_file="model2.png",)
 
     # make a GPU version of infer_model for evaluation
     if multi_gpu > 1:
