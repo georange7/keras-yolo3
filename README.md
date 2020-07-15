@@ -4,6 +4,7 @@
 Converted dataset to Yolo format. 
 
 #### Yolo format
+Used file datapre.py and converted dataset to yolo format (Images files from .ppm to .jpg and txt with annotations from every image) .
 ```python
 <classId> <center_x> <center_y> <width> <height>
 ```
