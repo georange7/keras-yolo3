@@ -122,12 +122,12 @@ def evaluate(model,
         # compute recall and precision
         recall    = true_positives / num_annotations
         precision = true_positives / np.maximum(true_positives + false_positives, np.finfo(np.float64).eps)
-        
-#         print("Recall :{:.4f}",recall)
-#         print("Precision  :{:.4f}", precision)
+        print("Recall :{:.4f}",recall)
+        print("Precision  :{:.4f}", precision)
 
         # compute average precision
         average_precision  = compute_ap(recall, precision)  
+        print('Average Precision:',average_precision)
         average_precisions[label] = average_precision
 
     return average_precisions    
@@ -307,8 +307,6 @@ def compute_ap(recall, precision):
     mrec = np.concatenate(([0.], recall, [1.]))
     mpre = np.concatenate(([0.], precision, [0.]))
     
-    print(mrec)
-    print(mpre)
 
     # compute the precision envelope
     for i in range(mpre.size - 1, 0, -1):
