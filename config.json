@@ -37,7 +37,7 @@
         "cache_name":           "validation.pkl",
 
         "valid_times":          1,
-        "tensorboard_dir":      "val_logs"
+        "tensorboard_dir":      "logs"
         
     }
 }
