@@ -9,6 +9,7 @@ from utils.bbox import draw_boxes
 from keras.models import load_model
 from tqdm import tqdm
 import numpy as np
+import tensorflow as tf
 
 config = tf.compat.v1.ConfigProto(
     gpu_options = tf.compat.v1.GPUOptions(per_process_gpu_memory_fraction=0.9)
