@@ -4,6 +4,7 @@ import numpy as np
 import json
 from voc import parse_voc_annotation
 from yolo import create_yolov3_model, dummy_loss
+from yolo import YoloLayer
 from generator import BatchGenerator
 from utils.utils import normalize, evaluate, makedirs
 from keras.callbacks import EarlyStopping, ReduceLROnPlateau
@@ -167,8 +168,9 @@ def create_model(
     else:
         train_model = template_model      
 
+    loss_fn = YoloLayer.call()
     optimizer = Adam(lr=lr, clipnorm=0.001)
-    train_model.compile(loss=dummy_loss, optimizer=optimizer)             
+    train_model.compile(loss=loss_fn, optimizer=optimizer)             
 
     return train_model, infer_model
 
